@@ -21,7 +21,7 @@ pacman -S --noconfirm --needed \
   noto-fonts ttf-dejavu \
   xdg-desktop-portal xdg-desktop-portal-kde \
   git wget curl flatpak \
-  greetd gamescope snapper grub-btrfs
+  greetd gamescope snapper grub-btrfs greetd-tuigreet
 
 
 # Create 'rocknrolla' user if it doesn't exist
@@ -49,8 +49,12 @@ command = "gamescope-session"
 user = "rocknrolla"
 EOF
 
-systemctl enable greetd.service
-systemctl disable sddm.service || true
+if grep -qi "z1 extreme" /proc/cpuinfo; then
+    echo "[+] Detected ROG Ally — enabling greetd autologin..."
+    systemctl enable greetd.service
+    systemctl disable sddm.service
+fi
+
 
 # Set up Flatpak and install apps
 echo "[Post-Install] Installing Flatpak apps..."
