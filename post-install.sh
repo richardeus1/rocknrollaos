@@ -55,8 +55,8 @@ flatpak install -y flathub com.valvesoftware.Steam
 flatpak install -y flathub com.heroicgameslauncher.hgl
 
 # Install EmuDeck (under rocknrolla user)
-echo "[Post-Install] Installing EmuDeck..."
-sudo -u rocknrolla bash -c 'curl -L https://www.emudeck.com/EmuDeck.sh | bash'
+#echo "[Post-Install] Installing EmuDeck..."
+#sudo -u rocknrolla bash -c 'curl -L https://www.emudeck.com/EmuDeck.sh | bash'
 
 # Configure Snapper for Btrfs
 echo "[Post-Install] Configuring Snapper..."
