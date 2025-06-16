@@ -63,13 +63,12 @@ flatpak install -y flathub com.heroicgameslauncher.hgl
 #sudo -u rocknrolla bash -c 'curl -L https://www.emudeck.com/EmuDeck.sh | bash'
 
 # Install Decky Loader (Steam plugin loader)
-echo "[Post-Install] Installing Decky Loader..."
-sudo -u rocknrolla bash -c '
-  mkdir -p ~/Downloads && cd ~/Downloads
-  curl -L https://github.com/SteamDeckHomebrew/decky-loader/releases/latest/download/install_release.sh -o install_release.sh
-  chmod +x install_release.sh
-  ./install_release.sh
-'
+#echo "[Post-Install] Installing Decky Loader..."
+#sudo -u rocknrolla bash -c '
+#  mkdir -p ~/Downloads && cd ~/Downloads
+#  curl -L https://github.com/SteamDeckHomebrew/decky-loader/releases/latest/download/install_release.sh -o install_release.sh
+#  chmod +x install_release.sh
+#  ./install_release.sh
 
 # Create session switcher scripts
 echo "[Post-Install] Creating session switcher..."
@@ -89,6 +88,10 @@ fi
 echo "Please reboot to apply."
 EOF
 chmod +x /usr/local/bin/session-switcher
+
+# Ensure Desktop exists
+echo "[Post-Install] Creating Desktop directory for rocknrolla..."
+sudo -u rocknrolla mkdir -p /home/rocknrolla/Desktop
 
 # Optional: create desktop shortcut for session switcher
 cat <<EOF > /home/rocknrolla/Desktop/SwitchSession.desktop
