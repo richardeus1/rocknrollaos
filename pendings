@@ -1,7 +1,34 @@
+INITIAL INSTALLATION MINIMAL
+
+
+
+
+
+------------------------------------------------------------------
+THIS STEPS ARE AFTER MINIMAL INSTALLATION
+
 after creating the post-install.sh do this:
+mkdir -p ~/rocknrollaiso
+cd ~/rocknrollaiso
+cp -r /usr/share/archiso/configs/releng/ rocknrolla
+cd rocknrolla
 
-Path: /etc/systemd/system/post-install.service
 
+
+sudo pacman -S --needed archiso git base-devel
+
+
+
+sudo rm -rf airootfs/*
+
+sudo mkdir -p airootfs/usr/local/bin
+sudo nano airootfs/usr/local/bin/post-install.sh
+PASTE:** All the data from your post-install.sh
+sudo chmod +x airootfs/usr/local/bin/post-install.sh
+
+sudo mkdir -p airootfs/etc/systemd/system
+sudo nano airootfs/etc/systemd/system/post-install.service
+PASTE:**
 [Unit]
 Description=RocknRollaOS Post Install Script
 After=multi-user.target
@@ -19,6 +46,13 @@ WantedBy=multi-user.target
 And don't forget to:
 
 
-chmod +x airootfs/usr/local/bin/post-install.sh
-mkdir -p airootfs/etc/systemd/system/multi-user.target.wants
-ln -s /etc/systemd/system/post-install.service airootfs/etc/systemd/system/multi-user.target.wants/post-install.service
+sudo chmod +x airootfs/usr/local/bin/post-install.sh
+sudo mkdir -p airootfs/etc/systemd/system/multi-user.target.wants
+sudo ln -s /etc/systemd/system/post-install.service airootfs/etc/systemd/system/multi-user.target.wants/post-install.service
+
+cd ~/rocknrollaiso
+sudo mkarchiso -v -w work -o out rocknrolla
+
+
+3. Define Packages
+Edit profiledef.sh and replace the default packages=() with your custom package list. Use this:
