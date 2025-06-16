@@ -111,7 +111,7 @@ echo "[Post-Install] Configuring Snapper..."
 snapper -c root create-config /
 SNAP_PART=$(findmnt / -o SOURCE -n)
 mkdir -p /.snapshots
-mount -o subvol=.snapshots "\$SNAP_PART" /.snapshots
+mount -o subvol=.snapshots "${SNAP_PART}" /.snapshots
 chmod 750 /.snapshots
 
 # Enable Snapper timers
