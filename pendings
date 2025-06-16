@@ -1,0 +1,24 @@
+after creating the post-install.sh do this:
+
+Path: /etc/systemd/system/post-install.service
+
+[Unit]
+Description=RocknRollaOS Post Install Script
+After=multi-user.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/post-install.sh
+RemainAfterExit=true
+
+[Install]
+WantedBy=multi-user.target
+
+
+
+And don't forget to:
+
+
+chmod +x airootfs/usr/local/bin/post-install.sh
+mkdir -p airootfs/etc/systemd/system/multi-user.target.wants
+ln -s /etc/systemd/system/post-install.service airootfs/etc/systemd/system/multi-user.target.wants/post-install.service
