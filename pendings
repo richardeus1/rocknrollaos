@@ -1,6 +1,86 @@
 INITIAL INSTALLATION MINIMAL
 
+Basic Installation Steps:
+Boot from the USB and run:
 
+bash
+Copy
+Edit
+# Connect to Wi-Fi if needed
+iwctl
+# inside iwctl:
+station wlan0 scan
+station wlan0 get-networks
+station wlan0 connect <YourSSID>
+exit
+Now start the Arch install:
+
+bash
+Copy
+Edit
+# Update clock
+timedatectl set-ntp true
+
+# Partitioning (example: /dev/nvme0n1)
+cfdisk /dev/nvme0n1
+# Recommended: EFI (512M), Swap (optional), Btrfs Root
+
+# Format
+mkfs.fat -F32 /dev/nvme0n1p1
+mkfs.btrfs /dev/nvme0n1p2
+mount /dev/nvme0n1p2 /mnt
+btrfs subvolume create /mnt/@
+umount /mnt
+mount -o compress=zstd,subvol=@ /dev/nvme0n1p2 /mnt
+mkdir -p /mnt/boot
+mount /dev/nvme0n1p1 /mnt/boot
+
+# Install base system
+pacstrap -K /mnt base linux linux-firmware btrfs-progs sudo nano
+
+# fstab
+genfstab -U /mnt >> /mnt/etc/fstab
+
+# Chroot
+arch-chroot /mnt
+Inside chroot:
+bash
+Copy
+Edit
+# Set up time and locale
+ln -sf /usr/share/zoneinfo/Region/City /etc/localtime
+hwclock --systohc
+echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+locale-gen
+echo "LANG=en_US.UTF-8" > /etc/locale.conf
+
+# Hostname
+echo "rocknrolla" > /etc/hostname
+echo "127.0.0.1 localhost" >> /etc/hosts
+echo "::1       localhost" >> /etc/hosts
+echo "127.0.1.1 rocknrolla.localdomain rocknrolla" >> /etc/hosts
+
+# Initramfs
+mkinitcpio -P
+
+# Set password
+passwd
+
+# Bootloader (GRUB)
+pacman -S grub efibootmgr os-prober
+grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
+grub-mkconfig -o /boot/grub/grub.cfg
+
+# Enable network
+pacman -S networkmanager
+systemctl enable NetworkManager
+Exit and reboot:
+bash
+Copy
+Edit
+exit
+umount -R /mnt
+reboot
 
 
 
