@@ -49,6 +49,9 @@ command = "gamescope-session"
 user = "rocknrolla"
 EOF
 
+echo "[+] Enabling NetworkManager"
+systemctl enable NetworkManager
+
 if grep -qi "z1 extreme" /proc/cpuinfo; then
     echo "[+] Detected ROG Ally — enabling greetd autologin..."
     systemctl enable greetd.service
