@@ -1,3 +1,4 @@
+## BETTER THING TO COPY FROM ARCHISO AND ADD systemd and udev if not listed **
 base
 linux
 linux-firmware
