@@ -129,9 +129,10 @@ cd ~/rocknrollaiso/rocknrolla/
 sudo systemctl --root=airootfs enable post-install.service
 
 
+Define Packages
+Edit profiledef.sh and replace the default packages=() with your custom package list. Use this:
+
 cd ~/rocknrollaiso
 sudo mkarchiso -v -w work -o out rocknrolla
 
 
-3. Define Packages
-Edit profiledef.sh and replace the default packages=() with your custom package list. Use this:
