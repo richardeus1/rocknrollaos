@@ -21,7 +21,7 @@ pacman -S --noconfirm --needed \
   noto-fonts ttf-dejavu \
   xdg-desktop-portal xdg-desktop-portal-kde \
   git wget curl flatpak \
-  greetd gamescope snapper grub-btrfs greetd-tuigreet
+  greetd gamescope snapper greetd-tuigreet
 
 
 # Create 'rocknrolla' user if it doesn't exist
