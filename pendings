@@ -128,7 +128,12 @@ And don't forget to:
 
 sudo chmod +x airootfs/usr/local/bin/post-install.sh
 sudo mkdir -p airootfs/etc/systemd/system/multi-user.target.wants
-sudo ln -s /etc/systemd/system/post-install.service airootfs/etc/systemd/system/multi-user.target.wants/post-install.service
+#THIS IS OBSOLETE
+#sudo ln -s /etc/systemd/system/post-install.service airootfs/etc/systemd/system/multi-user.target.wants/post-install.service
+#BETTER USE THIS
+cd ~/rocknrollaiso/rocknrolla/
+sudo systemctl --root=airootfs enable post-install.service
+
 
 cd ~/rocknrollaiso
 sudo mkarchiso -v -w work -o out rocknrolla
