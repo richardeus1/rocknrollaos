@@ -22,18 +22,18 @@ Edit
 timedatectl set-ntp true
 
 # Partitioning (example: /dev/nvme0n1)
-cfdisk /dev/nvme0n1
+cfdisk /dev/sda
 # Recommended: EFI (512M), Swap (optional), Btrfs Root
 
 # Format
-mkfs.fat -F32 /dev/nvme0n1p1
-mkfs.btrfs /dev/nvme0n1p2
-mount /dev/nvme0n1p2 /mnt
+mkfs.fat -F32 /dev/sda1
+mkfs.btrfs /dev/sda2
+mount /dev/sda2 /mnt
 btrfs subvolume create /mnt/@
 umount /mnt
-mount -o compress=zstd,subvol=@ /dev/nvme0n1p2 /mnt
+mount -o compress=zstd,subvol=@ /dev/sda2 /mnt
 mkdir -p /mnt/boot
-mount /dev/nvme0n1p1 /mnt/boot
+mount /dev/sda1 /mnt/boot
 
 # Install base system
 pacstrap -K /mnt base linux linux-firmware btrfs-progs sudo nano
