@@ -6,7 +6,7 @@ echo "[Post-Install] Starting setup..."
 # Update system just in case
 pacman -Sy --noconfirm
 
-# Install required packages, including full KDE Plasma Desktop
+# Install required packages, including minimal KDE Plasma Desktop
 echo "[Post-Install] Installing KDE Plasma and core packages..."
 pacman -S --noconfirm --needed \
   base-devel linux-headers \
