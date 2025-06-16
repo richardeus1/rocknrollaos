@@ -94,8 +94,6 @@ cd ~/rocknrollaiso
 cp -r /usr/share/archiso/configs/releng/ rocknrolla
 cd rocknrolla
 
-sudo rm -rf airootfs/*
-
 sudo mkdir -p airootfs/usr/local/bin
 sudo nano airootfs/usr/local/bin/post-install.sh
 PASTE:** All the data from your post-install.sh
@@ -128,9 +126,6 @@ sudo mkdir -p airootfs/etc/systemd/system/multi-user.target.wants
 cd ~/rocknrollaiso/rocknrolla/
 sudo systemctl --root=airootfs enable post-install.service
 
-
-Define Packages
-Edit profiledef.sh and replace the default packages=() with your custom package list. Use this:
 
 cd ~/rocknrollaiso
 sudo mkarchiso -v -w work -o out rocknrolla
