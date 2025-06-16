@@ -121,7 +121,6 @@ WantedBy=multi-user.target
 And don't forget to:
 
 
-sudo chmod +x airootfs/usr/local/bin/post-install.sh
 sudo mkdir -p airootfs/etc/systemd/system/multi-user.target.wants
 #THIS IS OBSOLETE
 #sudo ln -s /etc/systemd/system/post-install.service airootfs/etc/systemd/system/multi-user.target.wants/post-install.service
