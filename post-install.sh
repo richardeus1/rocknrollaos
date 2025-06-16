@@ -56,6 +56,9 @@ if grep -qi "z1 extreme" /proc/cpuinfo; then
     echo "[+] Detected ROG Ally — enabling greetd autologin..."
     systemctl enable greetd.service
     systemctl disable sddm.service
+else
+    echo "[+] VM detected — keeping SDDM as default"
+    systemctl enable sddm.service
 fi
 
 
