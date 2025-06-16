@@ -4,6 +4,9 @@ set -e
 echo "[Post-Install] Starting setup..."
 
 # Update system just in case
+echo "[Post-Install] Enabling multilib repository..."
+sed -i '/#\[multilib\]/,/#Include/s/^#//' /etc/pacman.conf
+pacman -Sy
 pacman -Sy --noconfirm
 
 # Install required packages, including minimal KDE Plasma Desktop
