@@ -119,9 +119,19 @@ grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
 
 # Network
-pacman -S --noconfirm iwd
-systemctl enable iwd
-systemctl start iwd
+#pacman -S --noconfirm iwd
+#systemctl enable iwd
+#systemctl start iwd
+if grep -qi "z1 extreme" /proc/cpuinfo; then
+    echo "[+] Detected ROG Ally — enabling iwd"
+    pacman -S --noconfirm iwd
+    systemctl enable iwd
+    systemctl start iwd
+else
+    echo "[+] VM or PC detected — enabling NetworkManager"
+    pacman -S --noconfirm networkmanager
+    systemctl enable NetworkManager
+fi
 
 EOF
 
