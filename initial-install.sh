@@ -73,10 +73,19 @@ pacstrap -K /mnt base linux linux-firmware btrfs-progs sudo nano
 # fstab
 genfstab -U /mnt >> /mnt/etc/fstab
 
-cp /usr/local/bin/post-install.sh /mnt/usr/local/bin/
-cp /etc/systemd/system/post-install.service /mnt/etc/systemd/system/
-ln -s /etc/systemd/system/post-install.service /mnt/etc/systemd/system/multi-user.target.wants/post-install.service
-chmod +x /mnt/usr/local/bin/post-install.sh
+#make executable post-install.sh  
+#cp /usr/local/bin/post-install.sh /mnt/usr/local/bin/
+#chmod +x /mnt/usr/local/bin/post-install.sh
+#cp /etc/systemd/system/post-install.service /mnt/etc/systemd/system/
+#ln -s /etc/systemd/system/post-install.service /mnt/etc/systemd/system/multi-user.target.wants/post-install.service
+
+# Copy post-install script and service into installed system
+echo "[Post-Install] Setting up one-time service..."
+install -Dm755 /usr/local/bin/post-install.sh /mnt/usr/local/bin/post-install.sh
+install -Dm644 /etc/systemd/system/post-install.service /mnt/etc/systemd/system/post-install.service
+ln -sf /etc/systemd/system/post-install.service /mnt/etc/systemd/system/multi-user.target.wants/post-install.service
+
+# ─────────────────────────────────────────────────────────────
 
 # Prompt for root password before chroot (so it's interactive)
 echo "Set root password for installed system:"
