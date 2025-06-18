@@ -94,7 +94,8 @@ after creating the post-install.sh do this:
 mkdir -p ~/rocknrollaiso
 sudo pacman -S --needed archiso git base-devel
 cd ~/rocknrollaiso
-cp -r /usr/share/archiso/configs/releng/ rocknrolla
+mkdir -p ~/rocknrollaiso/rocknrolla
+cp -r /usr/share/archiso/configs/releng/* rocknrolla
 cd rocknrolla
 
 sudo mkdir -p airootfs/usr/local/bin
