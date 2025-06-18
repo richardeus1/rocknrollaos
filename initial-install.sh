@@ -40,8 +40,14 @@ parted "$DISK" -- mkpart ESP fat32 1MiB 513MiB
 parted "$DISK" -- set 1 esp on
 parted "$DISK" -- mkpart primary btrfs 513MiB 100%
 
-EFI_PART="${DISK}p1"
-ROOT_PART="${DISK}p2"
+# Determine correct partition naming
+if [[ "$DISK" =~ nvme ]]; then
+  EFI_PART="${DISK}p1"
+  ROOT_PART="${DISK}p2"
+else
+  EFI_PART="${DISK}1"
+  ROOT_PART="${DISK}2"
+fi
 
 # ─────────────────────────────────────────────────────────────
 # Format
