@@ -87,6 +87,13 @@ ln -sf /etc/systemd/system/post-install.service /mnt/etc/systemd/system/multi-us
 
 # ─────────────────────────────────────────────────────────────
 
+# Detect ROG Ally before chroot
+if grep -qi "z1 extreme" /proc/cpuinfo; then
+  NETWORK_MODE="iwd"
+else
+  NETWORK_MODE="networkmanager"
+fi
+
 # Prompt for root password before chroot (so it's interactive)
 echo "Set root password for installed system:"
 while true; do
@@ -131,15 +138,15 @@ grub-mkconfig -o /boot/grub/grub.cfg
 #pacman -S --noconfirm iwd
 #systemctl enable iwd
 #systemctl start iwd
-if grep -qi "z1 extreme" /proc/cpuinfo; then
-    echo "[+] Detected ROG Ally — enabling iwd"
-    pacman -S --noconfirm iwd
-    systemctl enable iwd
-    systemctl start iwd
+
+if [[ "$NETWORK_MODE" == "iwd" ]]; then
+  echo "[+] Detected ROG Ally — enabling iwd"
+  pacman -S --noconfirm iwd
+  systemctl enable iwd
 else
-    echo "[+] VM or PC detected — enabling NetworkManager"
-    pacman -S --noconfirm networkmanager
-    systemctl enable NetworkManager
+  echo "[+] VM or PC detected — enabling NetworkManager"
+  pacman -S --noconfirm networkmanager
+  systemctl enable NetworkManager
 fi
 
 EOF
