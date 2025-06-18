@@ -128,7 +128,7 @@ chown rocknrolla:rocknrolla /home/rocknrolla/Desktop/SwitchSession.desktop
 # Configure Snapper
 echo "[Post-Install] Configuring Snapper..."
 snapper -c root create-config /
-SNAP_PART=$(findmnt / -o SOURCE -n)
+SNAP_PART=$(findmnt / -o SOURCE -n | sed 's/\[.*//')
 mkdir -p /.snapshots
 mount -o subvol=.snapshots "${SNAP_PART}" /.snapshots
 chmod 750 /.snapshots
