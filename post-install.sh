@@ -47,6 +47,14 @@ if ! grep -q '^%wheel' /etc/sudoers; then
   echo '%wheel ALL=(ALL:ALL) ALL' >> /etc/sudoers
 fi
 
+echo "[Post-Install] Creating gamescope-session wrapper..."
+cat <<'EOF' > /usr/local/bin/gamescope-session
+#!/bin/bash
+# Launch Steam inside gamescope
+exec gamescope -e -- flatpak run com.valvesoftware.Steam
+EOF
+chmod +x /usr/local/bin/gamescope-session
+
 # Configure greetd autologin to gamescope-session
 echo "[Post-Install] Configuring greetd autologin..."
 mkdir -p /etc/greetd
@@ -55,7 +63,7 @@ cat <<EOF > /etc/greetd/config.toml
 vt = 1
 
 [default_session]
-command = "gamescope-session"
+command = "/usr/local/bin/gamescope-session"
 user = "rocknrolla"
 EOF
 
