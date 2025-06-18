@@ -73,6 +73,15 @@ pacstrap -K /mnt base linux linux-firmware btrfs-progs sudo nano
 # fstab
 genfstab -U /mnt >> /mnt/etc/fstab
 
+# Prompt for root password before chroot (so it's interactive)
+echo "Set root password for installed system:"
+while true; do
+  read -rsp "New password: " root_pass1; echo
+  read -rsp "Retype password: " root_pass2; echo
+  [[ "$root_pass1" == "$root_pass2" ]] && break
+  echo "Passwords do not match. Try again."
+done
+
 # ─────────────────────────────────────────────────────────────
 # Chroot and configure inside the new system
 cat <<'EOF' | arch-chroot /mnt /bin/bash
