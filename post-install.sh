@@ -7,6 +7,7 @@ echo "[Post-Install] Starting setup..."
 read -rp "🔌 Do you want to connect to Wi-Fi now? (y/N): " setup_wifi
 if [[ "$setup_wifi" =~ ^[Yy]$ ]]; then
   echo "[Wi-Fi] Starting iwctl..."
+  systemctl enable iwd
   systemctl start iwd
   iwctl
   echo "[Wi-Fi] Exiting iwctl. Continuing install..."
@@ -58,8 +59,8 @@ command = "gamescope-session"
 user = "rocknrolla"
 EOF
 
-echo "[+] Enabling NetworkManager"
-systemctl enable NetworkManager
+#echo "[+] Enabling NetworkManager"
+#systemctl enable NetworkManager
 
 if grep -qi "z1 extreme" /proc/cpuinfo; then
     echo "[+] Detected ROG Ally — enabling greetd autologin..."
