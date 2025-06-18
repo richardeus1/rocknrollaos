@@ -1,0 +1,26 @@
+things to fix
+
+so far so good, i have been able to create the iso and launch it and installed.
+
+
+new pending things:
+create a script that semiautomates the initial setup from live iso.
+
+
+I found that after arch system is installed, the post-install.sh script will not be triggered. posibbly solution:
+
+3. ❌ The ISO build only had the file in the Live ISO, not copied to the final installed system
+If your ISO only included it in airootfs and didn’t have a script that copied it into the mounted /mnt during installation, then it won’t be present after install.
+
+🔧 Fix:
+Inside your ISO’s live system, before running arch-chroot, do:
+
+bash
+Copy
+Edit
+cp /usr/local/bin/post-install.sh /mnt/usr/local/bin/
+cp /etc/systemd/system/post-install.service /mnt/etc/systemd/system/
+ln -s /etc/systemd/system/post-install.service /mnt/etc/systemd/system/multi-user.target.wants/post-install.service
+chmod +x /mnt/usr/local/bin/post-install.sh
+
+if this fix is working, then, add it to the initial script that semiautomates the initial setup while in live iso
