@@ -3,6 +3,15 @@ set -e
 
 echo "[Post-Install] Starting setup..."
 
+# Optional Wi-Fi setup
+read -rp "🔌 Do you want to connect to Wi-Fi now? (y/N): " setup_wifi
+if [[ "$setup_wifi" =~ ^[Yy]$ ]]; then
+  echo "[Wi-Fi] Starting iwctl..."
+  systemctl start iwd
+  iwctl
+  echo "[Wi-Fi] Exiting iwctl. Continuing install..."
+fi
+
 # Update system just in case
 echo "[Post-Install] Enabling multilib repository..."
 sed -i '/#\[multilib\]/,/#Include/s/^#//' /etc/pacman.conf
