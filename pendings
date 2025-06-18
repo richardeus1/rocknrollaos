@@ -83,6 +83,9 @@ umount -R /mnt
 reboot
 
 
+once you login with arch installed, you need to start iwd for internet:
+sudo systemctl start iwd
+
 
 ------------------------------------------------------------------
 THIS STEPS ARE AFTER MINIMAL INSTALLATION
