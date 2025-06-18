@@ -84,7 +84,7 @@ done
 
 # ─────────────────────────────────────────────────────────────
 # Chroot and configure inside the new system
-cat <<'EOF' | arch-chroot /mnt /bin/bash
+cat <<EOF | arch-chroot /mnt /bin/bash
 set -e
 
 # Timezone and locale
@@ -106,8 +106,7 @@ EOL
 mkinitcpio -P
 
 # Password
-echo "Set password for root user"
-passwd
+echo "root:$root_pass1" | chpasswd
 
 # Bootloader
 pacman -S --noconfirm grub efibootmgr os-prober
@@ -117,8 +116,10 @@ grub-mkconfig -o /boot/grub/grub.cfg
 # Network
 pacman -S --noconfirm iwd
 systemctl enable iwd
+systemctl start iwd
 
 EOF
+
 
 # ─────────────────────────────────────────────────────────────
 echo "[Install Complete] Unmounting..."
